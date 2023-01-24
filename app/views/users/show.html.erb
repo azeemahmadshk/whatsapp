@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>
+
+<h1>Please Join a group :</h1>
+<% @room.each do |room| %> 
+
+<table>
+	<tr>
+		<td>
+		<p> <%= room.name %> </p>	
+		</td>
+		<td>
+		<a class="btn btn-default btn-xs" data-method="patch"  href=<%= room_path(id:room, user_id:@user ) %>> join group </a>	
+		</td>
+	</tr>
+</table>
+<% end %>
+
+<h1> My groups : </h1>
+<% @my_rooms.each do |my_room| %> 
+	<tr>
+		<td>
+			<p> <%= my_room.name %> </p>	
+		</td>
+		<td>
+
+			<a class="btn btn-default btn-xs" data-method="get"  href=<%= new_message_path(room:my_room, user:@user )%> > send message </a>	
+		</td>
+		<td> 
+			<a class="btn btn-default btn-xs"  href=<%= messages_path(room:my_room, user:@user )%> > open_group </a>	
+		</td>
+		
+	</tr>	
+<% end %>

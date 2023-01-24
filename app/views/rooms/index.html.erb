@@ -1,0 +1,76 @@
+<p id="notice"><%= notice %></p>
+<div class=" d-flex flex-row justify-content-center background" >
+  <div class="inner-div " >
+  <h1 class="text-danger">ALL Private Groups:</h1>
+  <p class="text-danger">Please Join a Whatsapp Group to start a chat</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+     <%= render 'form', room: @room %>
+    <%= link_to 'Make New Whatsapp Group', new_room_path %>
+    <tbody>
+      <% @rooms.each do |room| %>
+        <tr>
+          <% if room.user_ids.include? current_user.id %>
+        
+          <td><%= link_to room.name, room %></td>
+          <%else%>
+          <td><%= room.name %></td>
+          <%end%>      
+          <td>
+             <% if room.user_ids.exclude? current_user.id %>
+            <a class="btn btn-default btn-xs" data-method="patch"  href=<%= room_path(id:room, join: "join" ) %>> join group </a>
+            <%else%>
+           <!-- <p class="text-danger"> Already Joined </p>-->
+            <%end%>
+          </td>
+        </tr>
+      <% end %>
+      
+    </tbody> 
+  </table>
+</br>
+
+  <div id="room">
+    
+  </div> 
+  <br>
+  
+
+
+  <!--<h1 class="text-danger"> My JOINED Groups: </h1>
+      <% @my_rooms.each do |my_room| %>
+       <table>
+         <tr>
+          <td>
+         <%= my_room.name %>
+          </td>
+          <td><%= link_to 'Open Group', my_room %></td>
+         </tr>
+       </table>
+   <%end%>
+ -->
+</div>
+  
+ 
+</div>
+<style>
+  a:hover {
+
+}
+.background{
+ background-color: aliceblue ;
+}
+.inner-div{
+  background-color: #ffc1070d;
+}
+.link-style{
+  font-size: 15px;
+  color: black;
+  font-weight: 100
+}
+</style>

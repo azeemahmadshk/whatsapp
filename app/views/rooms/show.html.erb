@@ -1,0 +1,219 @@
+
+<% if @room.owner_id.present? && @room.owner_id == current_user.id %>
+<%= link_to 'Edit', edit_room_path(@room) %>
+<%end%> 
+<%= link_to 'Back', rooms_path %>
+ <div class=" d-flex flex-row justify-content-center col-md-12 col-lg-12 col-sm-12 " >
+
+  <div class="col-md-8 col-lg-8 col-sm-8 " >
+    <div class="col-md-12 col-lg-12 col-sm-12 " >
+    <% if  params[:message_display].present? %>
+      <p class="text-success" style="font-size: 20px;"><%=  params[:message_display] %></p> 
+    <%end %>
+
+    <h1 class=" text-danger"> Welcome to  <%= @room.name %> messages: </h1>
+         <div class=" dropdown-style w3-dropdown-click" >
+     <img src="/assets/Filter_Icon.png", style='height:50px;width:50px;float: right;'
+      onclick="myFunction()" class=" " >
+      <div class="dropdown-content w3-dropdown-content " id="Demo">
+      <table class="col-md-12 col-lg-12 col-sm-12 col-xs-12 ">
+        <tr class="row">
+          <td class=" col-sm-12 col-md-12 col-lg-12 col-xs-12">
+            <%= button_to 'ALL MEMBORS', room_users_path(@room), method:  :get, class: 'btn btn-info'  %>
+          </td>
+          <td class=" col-sm-12 col-md-12 col-lg-12 col-xs-12 ">
+            <%= form_tag room_messages_path(@room.id), method: "GET" do %>
+             
+              <%= text_field_tag :search_by_messages, params[:search_by_messages] , placeholder:"search by messages"%> 
+              <%= submit_tag "Search" , class: "btn btn-primary margin" %>
+            <% end %>
+          </td>
+          <td class=" col-sm-12 col-md-12 col-lg-12 col-xs-12">
+            <%= form_tag room_path, method: "patch",remote: true do %>
+              <%= text_field_tag :id, params[:id] , value:@room.id ,  class: 'hidden_field' %>
+              <%= text_field_tag :add_member, params[:add_member] , value:"add_member" ,  class: 'hidden_field' %>
+              <%= text_field_tag :add_by_email, params[:add_by_email] , placeholder:"add members by email"%> 
+              <%= submit_tag "Add members" , class: "btn btn-primary margin" %>
+            <% end %>
+          </td>    
+        </tr>
+    </table>
+      </div>
+      </div>
+    </br>
+     <% @room_messages.includes(:user).each do |room_message| %>
+      <table>
+       
+          <% if room_message.user_id.present? && room_message.user_id != 0 %>
+            <% if room_message.user_id== current_user.id %>
+                 <tr>
+              <td style="width:150px">
+                </td>
+              <td>
+                  <%if room_message.images.attached?%>
+                    <% if room_message.images.last.content_type =="image/png" || room_message.images.last.content_type =="image/jpeg" || room_message.images.last.content_type =="image/jpg"  %>
+                      <%= image_tag room_message.images.last.representation(resize_to_limit: [100, 100]) %>
+                    <%end%>
+                    <% if room_message.images.last.content_type =="video/mp4" %> 
+                      <%= video_tag url_for(room_message.images.last) , controls: true %>
+                    <%end%>  
+                  <%end%>
+               </td>
+            </tr>
+            <tr>
+            <td style="width:150px">
+            </td>
+            <td style="background-color: lightgreen;">
+             
+              <%=  room_message.user.email %> online
+              : 
+              <%= room_message.description %>
+            </td>
+            <td><%=room_message.created_at.in_time_zone('Pacific Time (US & Canada)')%></td>
+
+            <td><%= link_to 'Delete Message', room_message_path(@room.id,room_message.id), method: :delete, data: { confirm: 'Are you sure?' }, remote: true %></td>
+           </br>
+           
+        </tr>   
+          <%else%>
+           <tr>     
+          <td>
+              <%if room_message.images.attached?%>
+                <% if room_message.images.last.content_type =="image/png" || room_message.images.last.content_type =="image/jpeg" || room_message.images.last.content_type =="image/jpg"  %>
+                  <%= image_tag room_message.images.last.representation(resize_to_limit: [100, 100]) %>
+                <%end%>
+                <% if room_message.images.last.content_type =="video/mp4" %> 
+                  <%= video_tag url_for(room_message.images.last) , controls: true %>
+                <%end%>  
+              <%end%>
+           </td>
+           <td style="width:150px">
+            </td>
+        </tr>
+        <tr>
+         <tr>
+          <td style="background-color: antiquewhite; float: right;">
+             <%= room_message.user.email %>
+            : 
+            <%= room_message.description %>
+          </td>
+          <td><td><%=room_message.created_at.time.in_time_zone('Pacific Time (US & Canada)') %></td></td>
+          <td>
+           
+            </td>
+
+          <td style="width:150px"></td>
+          </br> 
+         </tr> 
+          <% end %>
+       <% end %> 
+       </tr>
+      
+      </table>
+    <%end%>
+    </br>
+    <div >
+     <table id="message" style="background-color: lightgreen;margin-left: 148px;">
+       
+     </table>
+    </div>
+    
+    <%= render partial: 'messages/form', locals: {message: @message, room_id:@room.id}  %>
+   
+    <p id="notice"><%= notice %></p>
+    </div>
+  </div>
+</div>
+
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<script>
+function myFunction() {
+  var x = document.getElementById("Demo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+
+<style>
+.hidden_field{
+    display: none !important;
+  }
+  .actions{
+    margin-left: -36px;
+  }
+  input, button, select, optgroup, textarea {
+    margin: 0;
+    height: 38px;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+  margin-top: 52px;
+}
+
+ .dropdown-content {
+  display: block;
+}
+@media only screen and (max-width: 469px)  {
+.dropdown-style{
+  float: right;
+  margin-right: 80px;
+}
+}
+.margin{
+      margin-top: 8px;
+}
+
+
+.dropbtn {
+  background-color: #3498DB;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+ 
+
+@media only screen and (max-width: 410px)  {
+ .dropdown-style{
+  float: left !important;
+ }
+}
+</style>
+   <script>
+    window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
+    
+  function myFunction() {
+    var x = document.getElementById("Demo");
+    if (x.className.indexOf("w3-show") == -1) { 
+      x.className += " w3-show";
+    } else {
+      x.className = x.className.replace(" w3-show", "");
+    }
+  }
+  
+   </script>

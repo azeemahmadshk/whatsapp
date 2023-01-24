@@ -1,0 +1,57 @@
+<!--<p id="notice"><%= notice %></p>
+
+<h1>Messages</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @messages.each do |message| %>
+      <tr>
+        <td><%= link_to 'Show', message %></td>
+        <td><%= link_to 'Edit', edit_message_path(message) %></td>
+        <td><%= link_to 'Destroy', message, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<%= link_to 'New Message', new_message_path %> -->
+
+
+
+
+
+
+<p id="notice"><%= notice %></p>
+<%= link_to 'Edit', edit_room_path(@room) %> |
+<%= link_to 'Back', rooms_path %>
+ <div class=" d-flex flex-row justify-content-center" >
+  <div class=" " >
+  <h1 class=" text-danger"> Below are searched messages in <%= @room.name %> : </h1>
+    <% if @search_messages.present? %>
+       <% @search_messages.each do |search_message| %>
+       <table>
+         <tr>
+         <% if search_message.user_id.present? && search_message.user_id != 0 %>
+         <%=  User.find_by_id(search_message.user_id).email %>
+         <% end %> 
+          : 
+         <%= search_message.description %>
+         </tr>
+       </table>
+      <%end%>
+      <%else%>
+      <%= @notice %>
+      <%end%>
+ </div>
+<style>
+.hidden_field{
+    display: none !important;
+  }
+</style>

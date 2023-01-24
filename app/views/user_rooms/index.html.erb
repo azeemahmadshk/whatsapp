@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>User Rooms</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @user_rooms.each do |user_room| %>
+      <tr>
+        <td><%= link_to 'Show', user_room %></td>
+        <td><%= link_to 'Edit', edit_user_room_path(user_room) %></td>
+        <td><%= link_to 'Destroy', user_room, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New User Room', new_user_room_path %>

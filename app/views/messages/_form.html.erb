@@ -1,0 +1,51 @@
+<%= form_for(@message, remote: true) do |form| %>
+  <% if message.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(message.errors.count, "error") %> prohibited this message from being saved:</h2>
+      <ul>
+        <% message.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>      
+    </div>
+  <% end %>
+  
+  <div class="actions">
+    <ul>      
+      <%= form.label :description, 'Type Message Below ', class:"description ", style: 'font-weight: normal;' %>
+      <%= form.text_field :description, class: 'form-control' %>
+      
+      <%= form.file_field :images,multiple: true, direct_upload: 'false' %>
+      <%= form.text_field :user_id, value: current_user.id,  class: 'hidden_field' %> 
+      <%= form.text_field :room_id, value: room_id,  class: 'hidden_field' %></br>
+      <%= form.submit value:"Send Message", class: "btn btn-primary send_message" %>
+    </ul>        
+  </div>
+<% end %>
+
+<Style>
+  .hidden_field{
+    display: none;
+  }
+  .new_message{
+    color: :red;
+  }
+  .form-control{
+    width: 92%;
+  }
+  @media only screen and (max-width: 469px)  {
+.form-control{
+    width: 80%;
+    margin-left: 10px;
+  }
+  .description{
+    margin-left: 10px;
+  }
+  .send_message{
+    margin-left: 10px;
+  }
+  }
+</Style>
+
+
+

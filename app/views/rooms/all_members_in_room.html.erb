@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+<%= link_to 'Edit', edit_room_path(@room) %> |
+<%= link_to 'Back', rooms_path %>
+ <div class=" d-flex flex-row justify-content-center" >
+  <div class=" " >
+  <h1 class=" text-danger"> Below are group memebers in <%= @room.name %> : </h1>
+   <% @room_members.each do |room_member| %>
+   <table>
+     <tr>
+     <p> User Email : <%= room_member.email %></p>
+     </tr>
+   </table>
+   <%end%>
+</div>
+  
+ </div>
+<style>
+.hidden_field{
+    display: none !important;
+  }
+</style>

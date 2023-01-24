@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<html >
+  <head>
+    <title>Whatsapp</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  
+
+  </head>
+<nav class="navbar navbar-dark bg-primary">
+  <% if user_signed_in? %>
+    <tr>
+      <td>
+        <div class="dropdown dropdown-style" >
+        <% if current_user.avatar.present? %>  
+          <%= image_tag(current_user.avatar.url, alt: 'Image' )%>
+        <%else%>
+          <img src="/assets/profile_image.jpeg", style='height:50px;width:50px;float: right;' >
+        <%end%>
+        <div class="dropdown-content">
+           Logged in as <strong><%= current_user.email %></strong>
+        <%= link_to 'Edit profile', edit_user_registration_path, :class => 'drop-link' %></br>
+        <%= link_to "Logout", destroy_user_session_path, method: :delete, class: 'drop-link'%>
+        </div>
+        </div> 
+      </td>
+    <td>
+    </br>
+    <td>
+    <%= link_to 'WHATSAPP GROUPS', rooms_path, :class => 'navbar-link' %>
+  </td>
+     </nav>
+    
+    </td>
+  </br>
+ 
+</br>
+  <td>
+    <!--<%= link_to 'SEND NEW MESSAGE', new_room_path %> -->
+  </td>
+  </br>
+  
+</tr>
+  <% else %>
+    <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
+    <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+  <% end %>
+  </p>
+  <body class="background">
+    <%= yield %>
+  </body>
+
+</html>
+<style>
+  .background{
+    background-color: aliceblue ; 
+    background-image: url("/assets/background.jpeg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover;
+  }
+  a:hover {
+  background-color: transparent;
+}
+
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+  margin-top: 52px;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+.dropdown-style{
+  float: right;
+  margin-right: 80px;
+}
+.navbar-link{
+  color: white!important;
+  font-size: 20px;
+  font-weight: bold;
+  margin-right: 30px;
+}
+}
+drop-link {
+  color: #666;
+}
+.profile-style{
+ height:50px;
+ width:50px;
+ float: right;'
+}
+</style>
+
+
