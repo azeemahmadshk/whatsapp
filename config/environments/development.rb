@@ -17,7 +17,8 @@ Rails.application.configure do
 
   # Show full error reports.
   config.consider_all_requests_local = true
-
+  #config.action_mailer.delivery_method = :letter_opener
+  #config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
   if Rails.root.join('tmp', 'caching-dev.txt').exist?
@@ -64,6 +65,24 @@ Rails.application.configure do
 
   # Suppress logger output for asset requests.
   config.assets.quiet = true
+
+
+
+  config.action_mailer.delivery_method = :smtp
+  host = 'localhost:3000' #replace with your own url
+  config.action_mailer.default_url_options = { :host => 'localhost:3000', protocol: 'http' }
+
+    # SMTP settings for gmail
+  config.action_mailer.smtp_settings = {
+    :address              => "smtp.gmail.com",
+    :port                 => 587,
+    :domain               => "gmail.com",
+    :user_name            => "azeem.ahmadshk@gmail.com",
+    :password             => "qdsfkrjufpgldqax",
+    :authentication       => "plain",
+    :enable_starttls_auto => true,
+  }
+  ActionMailer::Base.raise_delivery_errors = true
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true

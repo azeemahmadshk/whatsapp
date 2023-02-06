@@ -19,9 +19,9 @@
 //= require bootstrap-toggle-buttons
 //= require typeahead.bundle.min
 //= require jquery.mCustomScrollbar.concat.
-//= require jquery
-//= require jquery-ujs
-//= require rails-ujs
+
+
+
 //= require rooms/index
 //= require jquery2
 
@@ -29,15 +29,18 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require_tree 
+//= require_tree
+
+
+
 require("@rails/activestorage").start()
 require('jquery')
 import {$} from 'jquery-ujs'
 import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
-import "channels"
-
+require("channels/room_channel")
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+

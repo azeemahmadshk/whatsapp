@@ -7,5 +7,6 @@ class User < ApplicationRecord
 	has_many :rooms, through: :user_rooms
   has_many :messages
   mount_uploader :avatar, AvatarUploader
+  validates :email, presence:true
   
 end

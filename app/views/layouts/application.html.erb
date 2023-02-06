@@ -10,7 +10,9 @@
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   
-
+     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+     <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+    
   </head>
 <nav class="navbar navbar-dark bg-primary">
   <% if user_signed_in? %>
@@ -25,7 +27,7 @@
         <div class="dropdown-content">
            Logged in as <strong><%= current_user.email %></strong>
         <%= link_to 'Edit profile', edit_user_registration_path, :class => 'drop-link' %></br>
-        <%= link_to "Logout", destroy_user_session_path, method: :delete, class: 'drop-link'%>
+        <%= link_to "Logout", destroy_user_session_path, method: :get, class: 'drop-link'%>
         </div>
         </div> 
       </td>

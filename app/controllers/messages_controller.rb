@@ -38,19 +38,19 @@ class MessagesController < ApplicationController
     if message_params[:images].present?
       @message.images = message_params[:images]
     end
-    byebug
-    #respond_to do |format|      
-       @message.save 
-       ActionCable.server.broadcast "room_channel_#{@message.room_id}", message: @message
+    respond_to do |format|
+      if @message.save 
        #format.html { redirect_to room_url(@room), notice: "Message was successfully created." }
        #format.json { render :show, status: :created, location: @message }
-       #format.js{}
+       
+       SendMessageJob.perform_later(@message.id)
+       format.js{}
       # format.js {redirect_to "/rooms/#{@room}?format=js&message_id=#{@message.id}" , notice: "Message was successfully created.",message: @message }
-      #else
+      else
        # format.html { redirect_to room_url(@room) , notice: "Message not created" }
         #format.json { render json: @message.errors, status: :unprocessable_entity }
-      #end
-    #end
+      end
+    end
   end
 
   def search_messages

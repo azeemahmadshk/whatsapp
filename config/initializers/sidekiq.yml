@@ -1,0 +1,20 @@
+:concurrency: 18
+
+development:
+  :verbose: true
+  :queues:
+    - [development_priority, 2]
+    - development_default
+    - development_mailers
+
+staging:
+  :queues:
+    - [staging_priority, 2]
+    - staging_default
+    - staging_mailers
+
+production:
+  :queues:
+    - [production_priority, 2]
+    - production_default
+    - production_mailers

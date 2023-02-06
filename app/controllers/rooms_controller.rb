@@ -39,7 +39,6 @@ class RoomsController < ApplicationController
 
   # POST /rooms or /rooms.json
   def create
-    byebug
     @room = Room.new(room_params)
     @room.save
     respond_to do |format|

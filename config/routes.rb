@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :messages
   resources :user_rooms
   resources :settings
+  mount Sidekiq::Web => '/sidekiq'
   # resources :users 
   resources :rooms do 
     get :user, on: :member
