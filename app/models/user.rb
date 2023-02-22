@@ -8,5 +8,9 @@ class User < ApplicationRecord
   has_many :messages
   mount_uploader :avatar, AvatarUploader
   validates :email, presence:true
-  
+  #has_many :notifications
+
+
+  has_many :views
+  has_many :notifications, through: :views
 end

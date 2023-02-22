@@ -14,3 +14,7 @@
  *= require_self
  */
 @import "bootstrap";
+.index_as_table {
+    width: 289vh;
+    overflow: auto
+}

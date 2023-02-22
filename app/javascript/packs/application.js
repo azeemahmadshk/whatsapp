@@ -39,7 +39,7 @@ import {$} from 'jquery-ujs'
 import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
-require("channels/room_channel")
+require("channels/chat_channel")
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()

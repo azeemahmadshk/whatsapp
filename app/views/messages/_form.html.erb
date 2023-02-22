@@ -17,6 +17,7 @@
       
       <%= form.file_field :images,multiple: true, direct_upload: 'false' %>
       <%= form.text_field :user_id, value: current_user.id,  class: 'hidden_field' %> 
+      <%= form.text_field :sender_id, value: current_user.id,  class: 'hidden_field' %> 
       <%= form.text_field :room_id, value: room_id,  class: 'hidden_field' %></br>
       <%= form.submit value:"Send Message", class: "btn btn-primary send_message" %>
     </ul>        

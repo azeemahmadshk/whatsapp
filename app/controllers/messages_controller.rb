@@ -1,5 +1,6 @@
 class MessagesController < ApplicationController
   before_action :set_message, only: %i[ show edit update destroy ]
+  before_action :set_notification , only: %i[ create ]
 
   # GET /messages or /messages.json
   def index
@@ -38,12 +39,14 @@ class MessagesController < ApplicationController
     if message_params[:images].present?
       @message.images = message_params[:images]
     end
+    
     respond_to do |format|
       if @message.save 
        #format.html { redirect_to room_url(@room), notice: "Message was successfully created." }
-       #format.json { render :show, status: :created, location: @message }
-       
-       SendMessageJob.perform_later(@message.id)
+       #format.json { render :show, status: :created, location: @message }       
+       #SendMessageJob.perform_later(@message.id)
+       ActionCable.server.broadcast "chat_#{@message.room_id}", message: @message
+       #ChatChannel.broadcast_to("chat", { body: "This Room is Best Room." })
        format.js{}
       # format.js {redirect_to "/rooms/#{@room}?format=js&message_id=#{@message.id}" , notice: "Message was successfully created.",message: @message }
       else
@@ -96,6 +99,12 @@ class MessagesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def message_params
-      params.require(:message).permit(:description,:attachment, :room_id , :user_id, images: [])
+      params.require(:message).permit(:description,:attachment, :room_id , :user_id , images: [])
     end
+    def set_notification
+      @notification = Notification.create(user_id: params[:message][:user_id], sender_id: params[:message][:sender_id], room_id: params[:message][:room_id], seen_by: params[:message][:sender_id] )
+      @notification.save
+      View.create(user_id: @notification.user_id , notification_id: @notification.id , viewed_by: @notification.user_id)
+    end
+
 end

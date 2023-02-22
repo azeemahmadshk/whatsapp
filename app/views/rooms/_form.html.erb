@@ -15,7 +15,9 @@
   <div class="field">
     <%= form.label :name %>
     <%= form.text_field :name %>
+    <% if current_user.present? %>
     <%= form.text_field :owner_id, value: current_user.id,  class: 'hidden_field' %> 
+    <%end%>
   </div>
 
   <div class="actions">

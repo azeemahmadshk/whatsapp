@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   root to: 'users#index'
   devise_for :users, controllers: { registrations: 'users/registrations' }
   resources :messages
   resources :user_rooms
   resources :settings
+  resources :notifications
   mount Sidekiq::Web => '/sidekiq'
   # resources :users 
   resources :rooms do 

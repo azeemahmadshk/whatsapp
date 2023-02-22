@@ -116,6 +116,10 @@
      <table id="message" style="background-color: lightgreen;margin-left: 148px;">
        
      </table>
+     <span class="message-normal">
+       <table id="your-message" >       
+       </table>
+     </span>
     </div>
     
     <%= render partial: 'messages/form', locals: {message: @message, room_id:@room.id}  %>
@@ -202,6 +206,15 @@ function myFunction() {
  .dropdown-style{
   float: left !important;
  }
+}
+.msg-#{current_user.id} {
+  background: lightgreen ;
+}
+.background-color{
+  background: lightgreen ; 
+}
+.message-normal{
+  background: antiquewhite;
 }
 </style>
    <script>

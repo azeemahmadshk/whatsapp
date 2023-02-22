@@ -28,6 +28,12 @@
            <!-- <p class="text-danger"> Already Joined </p>-->
             <%end%>
           </td>
+
+          <% if @count[room.id] == 0 %>
+            <td><p></p></td>
+            <%else%>
+            <td><p class="notification"><%=@count[room.id]%></p></td>
+          <%end%>
         </tr>
       <% end %>
       
@@ -72,5 +78,12 @@
   font-size: 15px;
   color: black;
   font-weight: 100
+}
+.notification{
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding-left: 10px;
+  border-radius: 100%;
+  background-color: greenyellow;
 }
 </style>
